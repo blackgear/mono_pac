@@ -20,8 +20,8 @@ def loadRange(data):
     codelist = ['[{}]'.format(','.join(map(str, x))) for x in codelist]
     masklist = ['[{}]'.format(','.join(map(str, x))) for x in masklist]
 
-    codelist = ','.join(codelist).replace('[]','0')
-    masklist = ','.join(masklist).replace('[]','0')
+    codelist = '[{}]'.format(','.join(codelist).replace('[]','0'))
+    masklist = '[{}]'.format(','.join(masklist).replace('[]','0'))
 
     return codelist, masklist
 
@@ -32,7 +32,7 @@ def loadDomain(data):
     for line in lines:
         if sum(map(lambda x:line.endswith(x), lines)) == 1:
             domains.append(line)
-    return ','.join(map(lambda x:'"{}":1'.format(x), domains))
+    return '{{{}}}'.format(','.join(map(lambda x:'"{}":1'.format(x), domains)))
 
 def main():
     with open('mono.js') as f:
