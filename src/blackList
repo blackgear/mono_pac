@@ -1,32 +1,122 @@
+# Adobe
+typekit.com
+
+# Akamai
+akamai.net
+akamaiedge.net
+akamaihd.net
+edgesuite.net
+edgekey.net
+srip.net
+akamaitechnologies.com
+
 # Amazon
-#amazonaws.com
+amazonaws.com
+
+# Apple
+mzstatic.com
+
+# Automattic
+wordpress.com
+wordpress.org
+wp.com
+gravatar.com
+
+# Dropbox
+dropbox.com
+dropboxusercontent.com
+dropboxforum.com
+dropboxstatic.com
 
 # Facebook
 facebook.com
+fbcdn.net
+thefacebook.com
+facebook.net
+tfbnw.net
+
+# Yahoo
+yahoo.com
+yimg.com
+flickr.com
+staticflickr.com
 
 # Github
 github.com
+github.io
+githubusercontent.com
 
 # Google
 google.com
-google-analytics.com
-googleusercontent.com
 googleapis.com
+googlehosted.com
+googlezip.net
+youtube.com
+youtu.be
+youtube-nocookie.com
+ytimg.com
+googlevideo.com
+googledrive.com
+appspot.com
+googleusercontent.com
+ggpht.com
 gstatic.com
+gwtproject.org
+googlesource.com
+blogger.com
+blogspot.com
+chromium.org
+android.com
+googlecode.com
+keyhole.com
+chrome.com
+googlesyndication.com
+googlelabs.com
+g.co
+gmail.com
+goo.gl
+googlemail.com
+google-analytics.com
+googleadservices.com
+panoramio.com
+webmproject.org
+golang.org
+feedburner.com
+androidify.com
+gmodules.com
+withgoogle.com
 
 # Pushbullet
 pushbullet.com
 
+# Twitter
+twitter.com
+t.co
+tweetdeck.com
+twimg.com
+
+# Wikimedia
+wikipedia.org
+wikimedia.org
+mediawiki.org
+wikibooks.org
+wikidata.org
+wikimediafoundation.org
+wikinews.org
+wikiquote.org
+wikisource.org
+wikiversity.org
+wikivoyage.org
+wiktionary.org
+
+
+##################
 # Stackoverflow
 stackoverflow.com
 sstatic.net
 adzerk.net
 
-# Twitter
-twitter.com
 
-# Wordpress
-wordpress.com
-wordpress.org
-wp.com
-gravatar.com
+# ???
+tinypic.com
+twitpic.com
