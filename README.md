@@ -25,6 +25,8 @@ One domains per line, # for comments. Domains will be automatic merged when gene
 
 One record per line with IP/CIDR format.
 
+Records MUST be manually sort and unique before using.
+
 - proxyList:
 
 Proxy config infomations in order.

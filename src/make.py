@@ -31,7 +31,7 @@ def load_range(data):
 
 def load_domain(data):
     lines = filter(lambda x:not x.startswith('#') and x, data.splitlines())
-    lines.append('cn')
+    lines = list(lines) + ['cn']
     domains = []
     for line in lines:
         if sum(map(line.endswith, lines)) == 1:
