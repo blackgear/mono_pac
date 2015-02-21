@@ -43,3 +43,5 @@ SOCKS xxxx:xxxx
 DIRECT
 </pre>
 
+## To do
+- Unique, merge, sort ipList before generate.
