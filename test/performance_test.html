@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pac Test</title>
+    <script type="text/javascript" src="include.js"></script>
+    <script type="text/javascript" src="blackgear-mono_pac.pac"></script>
+    <!--
+    <script type="text/javascript" src="blackgear-mono_pac.pac"></script>
+    <script type="text/javascript" src="breakwa11-gfw_whitelist.pac"></script>
+    <script type="text/javascript" src="Leask-Flora_Pac.pac"></script>
+    <script type="text/javascript" src="Leask-Flora_Pac-mod.pac"></script>
+    <script type="text/javascript" src="usufu-Flora_Pac.pac"></script>
+    -->
+</head>
+<body>
+    <h1 id="result"></h1>
+    <script type="text/javascript">
+        var url = "http://example.com";
+        var host = "example.com";
+        FindProxyForURL(url, host);
+
+        var buffer = Array();
+        var tester = setInterval(function() {
+            var result = document.getElementById("result");
+            var start = new Date();
+            for (var j = 0; j < 100000; ++j) {
+                FindProxyForURL(url, host);
+            }
+            var end = new Date();
+            buffer.push(end - start);
+            var average = buffer.reduce(function(a, b){return a + b;}) / buffer.length;
+            result.textContent = ("Average " + String(average.toFixed(2)) + "ms in 100,000 tests");
+        }, 1000);
+    </script>
+</body>
+</html>
