@@ -3,7 +3,7 @@
 
 def load_proxy(data):
     lines = data.splitlines()
-    return '"{}"'.format(';'.join(lines))
+    return '"{};"'.format(';'.join(lines))
 
 def load_range(data):
     lines = data.splitlines()
@@ -31,7 +31,6 @@ def load_range(data):
 
 def load_domain(data):
     lines = filter(lambda x:not x.startswith('#') and x, data.splitlines())
-    lines = list(lines) + ['cn']
     domains = []
     for line in lines:
         if sum(map(line.endswith, lines)) == 1:
