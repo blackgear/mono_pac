@@ -113,7 +113,7 @@ Just test this two PAC files:
 
 <pre>
     var unixtime_ms = new Date().getTime();
-    while(new Date().getTime() < unixtime_ms + 5000) {}
+    while(new Date().getTime() &lt; unixtime_ms + 5000) {}
     function FindProxyForURL(url, host) {
         return "DIRECT;";
     }
@@ -122,7 +122,7 @@ Just test this two PAC files:
 <pre>
     function FindProxyForURL(url, host) {
         var unixtime_ms = new Date().getTime();
-        while(new Date().getTime() < unixtime_ms + 5000) {}
+        while(new Date().getTime() &lt; unixtime_ms + 5000) {}
         return "DIRECT;";
     }
 </pre>
