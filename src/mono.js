@@ -2,16 +2,17 @@
  * Copyright (C) 2015 BlackGear
  * https://github.com/BlackGear/Mono_PAC
  */
-function FindProxyForURL(url, host) {
-    var tunnel = __proxyList__;
-    var direct = "DIRECT;";
+var tunnel = __proxyList__;
+var direct = "DIRECT;";
+var whiteList = __whiteList__;
+var blackList = __blackList__;
+var codeList = __codeList__;
+var maskList = __maskList__;
 
+function FindProxyForURL(url, host) {
     if (isPlainHostName(host) || (host === "127.0.0.1") || (host === "localhost")) {
         return direct;
     }
-
-    var whiteList = __whiteList__;
-    var blackList = __blackList__;
 
     var suffix;
     var pos = host.lastIndexOf(".");
@@ -36,9 +37,6 @@ function FindProxyForURL(url, host) {
     var atom = IP.split(".");
     var code = ((atom[1] & 0xff) << 8) | ((atom[2] & 0xff));
     var hash = atom[0];
-
-    var codeList = __codeList__;
-    var maskList = __maskList__;
 
     var codeHash = codeList[hash];
     var maskHash = maskList[hash];

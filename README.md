@@ -100,5 +100,33 @@ breakwa11-gfw_whitelist.pac does not check domains white or black list
 
 ** Mono generates the smallest PAC but provides the best performance.**
 
+## Trivia
+
+The code in the root field of the PAC file will be run only once.
+
+The code in the FindProxyForURL function's field will be run each time you browser the internet.
+
+Just test this two PAC files:
+
+<pre>
+    var unixtime_ms = new Date().getTime();
+    while(new Date().getTime() < unixtime_ms + 5000) {}
+    function FindProxyForURL(url, host) {
+        return "DIRECT;";
+    }
+</pre>
+
+<pre>
+    function FindProxyForURL(url, host) {
+        var unixtime_ms = new Date().getTime();
+        while(new Date().getTime() < unixtime_ms + 5000) {}
+        return "DIRECT;";
+    }
+</pre>
+
+So put all var xx = yy in the root field will accelerate the PAC file.
+
+PS: if code in the root field of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
+
 ## To do
 - Unique, merge, sort ipList before generate.
