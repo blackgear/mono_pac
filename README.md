@@ -43,6 +43,9 @@ SOCKS xxxx:xxxx
 DIRECT
 </pre>
 
+Note: The last DIRECT have a potential risk cause the dns pollution will affect the domains in the blackList.
+
+Note: When you use socks proxy, whether dns resolve will through the proxy is determined by the Apps itself. When you use http proxy, the dns resolve will always through the proxy.
 
 ## Performance
 Performance with Node.js:
