@@ -14,7 +14,7 @@ Edit config file in ./src, then:
 <pre>
 $ python ./src/make.py
 </pre>
-Both Python 2 and 3 are supported.
+Only Python 2 is supported.
 
 ## Configuration
 - WhiteList / BlackList:

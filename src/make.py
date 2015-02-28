@@ -7,13 +7,26 @@ def load_proxy(data):
 
 def load_range(data):
     lines = data.splitlines()
-    lines.append('127.0.0.0/24')
-    lines.append('192.168.0.0/16')
-    lines.append('172.16.0.0/12')
+    lines.append('0.0.0.0/8')
     lines.append('10.0.0.0/8')
+    lines.append('127.0.0.0/8')
+    lines.append('169.254.0.0/16')
+    lines.append('172.16.0.0/12')
+    lines.append('192.0.0.0/24')
+    lines.append('192.0.2.0/24')
+    lines.append('192.88.99.0/24')
+    lines.append('192.168.0.0/16')
+    lines.append('198.18.0.0/15')
+    lines.append('198.51.100.0/24')
+    lines.append('203.0.113.0/24')
+    lines.append('224.0.0.0/4')
+    lines.append('240.0.0.0/4')
 
-    codelist = [[] for i in range(256)]
-    masklist = [[] for i in range(256)]
+    lines = list(set(lines))
+    lines = sorted(lines, key=lambda ip: reduce(lambda x, y: (x << 8) + y, map(int, ip.split('/')[0].split('.'))))
+
+    codelist = [[] for _ in range(256)]
+    masklist = [[] for _ in range(256)]
 
     for line in lines:
         item = line.split('/')
@@ -30,7 +43,7 @@ def load_range(data):
     return codelist, masklist
 
 def load_domain(data):
-    lines = filter(lambda x:not x.startswith('#') and x, data.splitlines())
+    lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
     domains = []
     for line in lines:
         if sum(map(line.endswith, lines)) == 1:
