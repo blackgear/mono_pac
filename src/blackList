@@ -1,6 +1,9 @@
 # Adobe
 typekit.net
 
+#Adzerk
+adzerk.net
+
 # Akamai
 akamai.net
 akamaiedge.net
@@ -9,6 +12,11 @@ edgesuite.net
 edgekey.net
 srip.net
 akamaitechnologies.com
+akamaitechnologies.fr
+akamaitech.net
+akadns.net
+akam.net
+akamaistream.net
 
 # Amazon
 amazonaws.com
@@ -35,6 +43,9 @@ fbcdn.net
 thefacebook.com
 facebook.net
 tfbnw.net
+
+# Fastly
+fastly.net
 
 # Yahoo
 yahoo.com
@@ -87,14 +98,27 @@ androidify.com
 gmodules.com
 withgoogle.com
 
+# Microsoft
+azurewebsites.net
+
 # Pushbullet
 pushbullet.com
+
+# Stackoverflow
+stackoverflow.com
+sstatic.net
+
+# Tinypic
+tinypic.com
 
 # Twitter
 twitter.com
 t.co
 tweetdeck.com
 twimg.com
+
+# Twitpic
+twitpic.com
 
 # V2EX
 v2ex.com
@@ -112,15 +136,3 @@ wikisource.org
 wikiversity.org
 wikivoyage.org
 wiktionary.org
-
-
-##################
-# Stackoverflow
-stackoverflow.com
-sstatic.net
-adzerk.net
-
-
-# ???
-tinypic.com
-twitpic.com
