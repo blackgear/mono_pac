@@ -1,7 +1,7 @@
 # Adobe
 typekit.net
 
-#Adzerk
+# Adzerk
 adzerk.net
 
 # Akamai
@@ -46,12 +46,6 @@ tfbnw.net
 
 # Fastly
 fastly.net
-
-# Yahoo
-yahoo.com
-yimg.com
-flickr.com
-staticflickr.com
 
 # Github
 github.com
@@ -136,3 +130,9 @@ wikisource.org
 wikiversity.org
 wikivoyage.org
 wiktionary.org
+
+# Yahoo
+yahoo.com
+yimg.com
+flickr.com
+staticflickr.com
