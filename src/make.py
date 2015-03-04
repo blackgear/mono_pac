@@ -26,6 +26,42 @@ class DomainTree(object):
                 self.node[name].reduce(suffix)
                 self.list.extend(self.node[name].list)
 
+class RouteChain(object):
+    def __init__(self):
+        self.line = []
+        self.list = []
+
+    def insert(self, ipnet):
+        addr, mask = ipnet.split('/')
+        bits = addr.split('.')
+        addr = 0
+        for byte in bits:
+            addr = (addr << 8) + int(byte)
+        mask = 1 << 32 - int(mask)
+        self.line.append((addr,mask))
+
+    def reduce(self):
+        self.line.sort(key=lambda x: x[0])
+        head = 0
+        line = []
+        for (addr, mask) in self.line:
+            flag = addr + mask
+            if head > flag:
+                continue
+            if head > addr:
+                addr, _ = line.pop()
+                mask = flag - addr
+            head = flag
+            line.append((addr, mask))
+        for (addr, mask) in line:
+            while mask > 0:
+                head = 1 << mask.bit_length() - 1
+                if addr + head >> 24 != addr >> 24:
+                    head = (((addr >> 24) + 1) << 24) - addr
+                self.list.append((addr, head))
+                mask = mask - head
+                addr = addr + head
+
 def load_proxy(data):
     lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
     return '"{};"'.format(';'.join(lines))
@@ -47,17 +83,18 @@ def load_range(data):
     lines.append('224.0.0.0/4')
     lines.append('240.0.0.0/4')
 
-    lines = list(set(lines))
-    lines = sorted(lines, key=lambda ip: reduce(lambda x, y: (x << 8) + y, map(int, ip.split('/')[0].split('.'))))
+    route = RouteChain()
+    for line in lines:
+        route.insert(line)
+    route.reduce()
 
     codelist = [[] for _ in range(256)]
     masklist = [[] for _ in range(256)]
 
-    for line in lines:
-        item = line.split('/')
-        atom = item[0].split('.')
-        codelist[int(atom[0])].append(int(atom[1]) << 8 | int(atom[2]) << 0)
-        masklist[int(atom[0])].append(24 - int(item[1]))
+    for (addr, mask) in route.list:
+        atom = addr >> 24
+        codelist[atom].append(addr >> 8 & 0x00FFFF)
+        masklist[atom].append(mask.bit_length()-9)
 
     codelist = ['[{}]'.format(','.join(map(str, x))) for x in codelist]
     masklist = ['[{}]'.format(','.join(map(str, x))) for x in masklist]
