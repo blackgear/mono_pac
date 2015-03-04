@@ -62,12 +62,17 @@ class RouteChain(object):
                 mask = mask - head
                 addr = addr + head
 
+def load_config(data):
+    lines = []
+    for line in data.splitlines():
+        lines.append(line.split('#')[0].strip())
+    return filter(None, lines)
+
 def load_proxy(data):
-    lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
-    return '"{};"'.format(';'.join(lines))
+    return '"{};"'.format(';'.join(load_config(data)))
 
 def load_range(data):
-    lines = data.splitlines()
+    lines = load_config(data)
     lines.append('0.0.0.0/8')
     lines.append('10.0.0.0/8')
     lines.append('127.0.0.0/8')
@@ -105,7 +110,7 @@ def load_range(data):
     return codelist, masklist
 
 def load_domain(data):
-    lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
+    lines = load_config(data)
     domains = DomainTree()
     for line in lines:
         domains.insert(line)

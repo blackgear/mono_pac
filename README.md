@@ -23,11 +23,11 @@ One domains per line, # for comments. Domains will be automatic merged when gene
 
 - ipList:
 
-One record per line with IP/CIDR format. Records will be automatic merged before generating.
+One record per line with IP/CIDR format, # for comments. Records will be automatic merged before generating.
 
 - proxyList:
 
-Proxy config infomations in order.
+Proxy config infomations in order, # for comments.
 <pre>
 PROXY host:port   = use HTTP proxy
 SOCKS5 host:port  = use Socks5 proxy
