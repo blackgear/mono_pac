@@ -10,7 +10,7 @@ var codeList = __codeList__;
 var maskList = __maskList__;
 
 function FindProxyForURL(url, host) {
-    if (isPlainHostName(host) || (host === "127.0.0.1") || (host === "localhost")) {
+    if (isPlainHostName(host)) {
         return direct;
     }
 
@@ -50,7 +50,11 @@ function FindProxyForURL(url, host) {
 
     while (min + 1 < max) {
         var mid = (min + max) >> 1;
-        codeHash[mid] > code ? max = mid : min = mid;
+        if (codeHash[mid] > code) {
+            max = mid;
+        } else {
+            min = mid;
+        }
     }
 
     if (code - codeHash[min] >> maskHash[min] === 0) {
