@@ -2,9 +2,10 @@
 cn
 local
 lan
+localhost
 
 # Acfun
-acfun.tv
+#acfun.tv
 
 # Ali
 alipay.com
@@ -19,18 +20,12 @@ baidu.com
 bdstatic.com
 tiebaimg.com
 
-# Booklink
-booklink.me
-
 # BDWM
 bdwm.net
 
 # Bilibili
 bilibili.com
 acgvideo.com
-
-# DMM
-dmm.com
 
 # iapps
 iapps.im
