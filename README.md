@@ -14,18 +14,16 @@ Edit config file in ./src, then:
 <pre>
 $ python ./src/make.py
 </pre>
-Only Python 2 is supported.
+Both Python 2 and 3 are supported.
 
 ## Configuration
 - WhiteList / BlackList:
 
-One domains per line, # for comments. Domains will be automatic merged when generating. So you can just add domains to the list.
+One domains per line, # for comments. Domains will be automatic merged when generating. So you can feel free to add domains to the list.
 
 - ipList:
 
-One record per line with IP/CIDR format.
-
-Records MUST be manually sort and unique before using.
+One record per line with IP/CIDR format. Records will be automatic merged before generating.
 
 - proxyList:
 
@@ -130,9 +128,6 @@ Just test this two PAC files:
 So put all var xx = yy in the root field will accelerate the PAC file.
 
 PS: if code in the root field of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
-
-## To do
-- Unique, merge, sort ipList before generate.
 
 ## LICENSE
 The MIT License
