@@ -1,39 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class DomainNode(object):
+class DomainTree(object):
     def __init__(self, name=''):
         self.name = name
-        self.node = []
-        self.type = False
+        self.node = {}
+        self.mark = False
+        self.list = []
 
-    def item(self, name):
-        for index in range(0, len(self.node)):
-            if self.node[index].name == name:
-                return self.node[index]
+    def insert(self, domain):
+        domains = domain.rsplit('.', 1)
+        node = self.node.setdefault(domains[-1], DomainTree(domains[-1]))
+        if len(domains) == 1:
+            node.mark = True
         else:
-            self.node.append(DomainNode(name))
-            return self.node[-1]
+            node.insert(domains[0])
 
-    def add(self, domain):
-        if '.' in domain:
-            child, root = domain.rsplit('.', 1)
-            self.item(root).add(child)
-        else:
-            self.item(domain).type = True
-
-    def list(self, suffix=''):
+    def reduce(self, suffix=''):
         suffix = self.name + '.' + suffix if suffix else self.name
-        if self.type is True:
-            return [suffix]
+        if self.mark is True:
+            self.list = [suffix]
         else:
-            domains = []
-            for child in self.node:
-                domains += child.list(suffix)
-            return domains
+            self.list = []
+            for name in self.node:
+                self.node[name].reduce(suffix)
+                self.list.extend(self.node[name].list)
 
 def load_proxy(data):
-    lines = data.splitlines()
+    lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
     return '"{};"'.format(';'.join(lines))
 
 def load_range(data):
@@ -75,13 +69,14 @@ def load_range(data):
 
 def load_domain(data):
     lines = filter(lambda x: not x.startswith('#') and x, data.splitlines())
-    domains = DomainNode()
+    domains = DomainTree()
     for line in lines:
-        domains.add(line)
-    return '{{{}}}'.format(','.join(map('"{}":1'.format, domains.list())))
+        domains.insert(line)
+    domains.reduce()
+    return '{{{}}}'.format(','.join(map('"{}":1'.format, domains.list)))
 
 def main():
-    with open('mono.js') as f:
+    with open('mono.min.js') as f:
         payload = f.read()
 
     with open('proxyList') as f:
