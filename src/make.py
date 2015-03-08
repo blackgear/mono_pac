@@ -24,7 +24,7 @@ class DomainTree(object):
         if self.mark is True:
             self.dict = {suffix:0}
         else:
-            self.list = []
+            self.dict = {}
             for name in self.node:
                 self.node[name].reduce(suffix)
                 self.dict.update(self.node[name].dict)
@@ -55,7 +55,7 @@ class RouteChain(object):
         for byte in bits:
             addr = (addr << 8) + int(byte)
         mask = 1 << 32 - int(mask)
-        self.rule.append((addr,mask))
+        self.rule.append((addr, mask))
 
     def reduce(self):
         self.rule.sort(key=lambda x: x[0])
@@ -119,7 +119,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         prog='MonoPac',
         description='Mono Pac Generator',
-        epilog='Across the Great Firewall, we can reach every corner in the world')
+        epilog='Across the Great Firewall, we can reach every corner in the world.')
 
     parser.add_argument('-b', dest='blacklist', default='blackList', type=argparse.FileType('r'),
                         metavar='blackList', help='Path of the black list')
