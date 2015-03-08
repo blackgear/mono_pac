@@ -41,7 +41,7 @@ function FindProxyForURL(url, host) {
     var codeHash = codeList[hash];
     var maskHash = maskList[hash];
 
-    if (codeHash === 0) {
+    if (codeHash.length === 0) {
         return tunnel;
     }
 
