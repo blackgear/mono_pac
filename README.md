@@ -26,23 +26,66 @@ optional arguments:
   -o pacFile    Path of the output pac file
 
 Across the Great Firewall, we can reach every corner in the world.
+
+$ python ./src/make.py -p "SOCKS5 192.168.1.1:1080;SOCKS 192.168.1.1:1080" -o ./proxy.pac
 </pre>
 Both Python 2 and 3 are supported.
 
-## Detail
-- blackList:
+## Details
+
+The Pac works in this way:
+
+1. Grab url and host:
+
+    when you browse https://www.google.com/xxx
+
+    url = https://www.google.com/xxx
+
+    host = www.google.com
+
+2. Match domain:
+
+    test if "www.google.com" in blackList,
+
+    test if "www.google.com" in whiteList,
+
+    test if     "google.com" in blackList,
+
+    test if     "google.com" in whiteList,
+
+    test if            "com" in blackList.
+
+    test if            "com" in whiteList,
+
+    domain in blackList -> proxy
+
+    domain in blackList -> direct
+
+3. Test Dns resolve:
+
+    if dns resolve to the host failed -> proxy
+
+4. Test IP range:
+
+    dns resolve the host.
+
+    if IP in any range in ipList -> direct
+
+    others -> proxy
+
+### blackList:
 
 One domains per line.
 
-- whiteList:
+### whiteList:
 
 One domains per line.
 
-- ipList:
+### ipList:
 
 One record per line with IP/CIDR format.
 
-- proxyList:
+### proxyList:
 
 Proxy Configs separated by ";".
 
@@ -119,9 +162,9 @@ breakwa11-gfw_whitelist.pac does not check if domain in white or black list. whi
 
 ## Trivia
 
-The code in the root field of the PAC file will be run only once.
+The code in the root scope of the PAC file will be run only once.
 
-The code in the FindProxyForURL function's field will be run each time you browser the internet.
+The code in the FindProxyForURL function's scope will be run each time you browser the internet.
 
 Just test this two PAC files:
 
@@ -141,9 +184,9 @@ Just test this two PAC files:
     }
 </pre>
 
-So put all var xx = yy in the root field will accelerate the PAC file.
+So put all var xx = yy in the root scope will accelerate the PAC file.
 
-PS: if code in the root field of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
+PS: if code in the root scope of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
 
 ## LICENSE
 The MIT License
