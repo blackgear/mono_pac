@@ -1,8 +1,9 @@
 var url = "http://example.com";
 var host = "example.com";
+FindProxyForURL(url, host);
 
 var time = process.hrtime();
-var repeat = 100000;
+var repeat = 1000000;
 for (var j = 0; j < repeat; j++) {
     FindProxyForURL(url, host);
 }

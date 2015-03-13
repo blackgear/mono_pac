@@ -102,8 +102,8 @@ def load_range(data):
         codelist[atom].append(addr >> 8 & 0x00FFFF)
         masklist[atom].append(mask.bit_length() - 9)
 
-    codelist = json.dumps(codelist, separators=(',', ':'))
-    masklist = json.dumps(masklist, separators=(',', ':'))
+    codelist = json.dumps(codelist, separators=(',', ':')).replace('[]','0')
+    masklist = json.dumps(masklist, separators=(',', ':')).replace('[]','0')
 
     return codelist, masklist
 
