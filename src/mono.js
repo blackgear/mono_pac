@@ -14,18 +14,18 @@ function FindProxyForURL(url, host) {
         return direct;
     }
 
-    var suffix = host;
+    var domain = host;
     var pos = 0;
 
     do {
-        if (blackList.hasOwnProperty(suffix)) {
+        if (blackList.hasOwnProperty(domain)) {
             return tunnel;
         }
-        if (whiteList.hasOwnProperty(suffix)) {
+        if (whiteList.hasOwnProperty(domain)) {
             return direct;
         }
         pos = host.indexOf(".", pos) + 1;
-        suffix = host.substring(pos);
+        domain = host.substring(pos);
     } while (pos > 0);
 
     var IP = dnsResolve(host);
