@@ -3,7 +3,7 @@
  * https://github.com/BlackGear/Mono_PAC
  */
 var tunnel = __proxyList__;
-var direct = "DIRECT;";
+var direct = "DIRECT";
 var whiteList = __whiteList__;
 var blackList = __blackList__;
 var codeList = __codeList__;
