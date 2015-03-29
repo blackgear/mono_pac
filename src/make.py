@@ -63,9 +63,9 @@ class RouteChain(object):
         rule = []
         for (addr, mask) in self.rule:
             flag = addr + mask
-            if head > flag:
+            if head >= flag:
                 continue
-            if head > addr:
+            if head >= addr:
                 addr, _ = rule.pop()
                 mask = flag - addr
             head = flag
