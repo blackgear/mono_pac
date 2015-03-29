@@ -188,6 +188,30 @@ So put all var xx = yy in the root scope will accelerate the PAC file.
 
 PS: if code in the root scope of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
 
+## Compress
+
+Experimental compress feature are used in branchs.
+
+### master / develop
+
+PAC file is compressed with uglifyjs 2:
+
+<pre>
+$ uglifyjs mono.js -m toplevel -r FindProxyForURL -c -o mono.min.js
+</pre>
+
+### lz
+
+Use lz-string to compress the ip range list, 40% space savings, 20% performance loss.
+
+### unicode
+
+Use unicode black magic to compress ip range list, 50% space savings, 10% performance loss.
+
+### objgen
+
+Dynamic object generation to compress domain list.
+
 ## LICENSE
 The MIT License
 
