@@ -9,7 +9,7 @@ Mono generates a much smaller PAC file than any other project does.
 $ git clone https://github.com/BlackGear/Mono_PAC.git
 </pre>
 
-## Uasge
+## Usage
 <pre>
 $ python ./src/make.py -h
 usage: MonoPac [-h] [-b blackList] [-w whiteList] [-i ipList] -p proxyList
@@ -84,6 +84,8 @@ One domains per line.
 ### ipList:
 
 One record per line with IP/CIDR format.
+
+Both '123.123.123.0/24' and '123.123.123.0/255.255.255.0' are acceptable.
 
 ### proxyList:
 
