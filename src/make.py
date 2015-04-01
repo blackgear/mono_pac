@@ -31,8 +31,8 @@ class DomainTree(object):
 
 class RouteChain(object):
     def __init__(self):
-        self.rule = []
         self.list = []
+        self.flag = True
         self.insert('0.0.0.0/8')
         self.insert('10.0.0.0/8')
         self.insert('127.0.0.0/8')
@@ -48,20 +48,41 @@ class RouteChain(object):
         self.insert('224.0.0.0/4')
         self.insert('240.0.0.0/4')
 
+    def __str__(self):
+        self.reduce()
+        line = []
+        for (addr, mask) in self.list:
+            line.append('{}.{}.{}.{}/{}'.format(
+                (addr >> 24) % 256,
+                (addr >> 16) % 256,
+                (addr >>  8) % 256,
+                (addr >>  0) % 256,
+                (33 - mask.bit_length())))
+        return '\n'.join(line)
+
+    def __iter__(self):
+        self.reduce()
+        return iter(self.list)
+
     def insert(self, ipnet):
+        self.flag = False
         addr, mask = ipnet.split('/')
         bits = addr.split('.')
         addr = 0
         for byte in bits:
             addr = (addr << 8) + int(byte)
+        if '.' in mask:
+            mask = sum([bin(int(x)).count('1') for x in mask.split('.')])
         mask = 1 << 32 - int(mask)
-        self.rule.append((addr, mask))
+        self.list.append((addr, mask))
 
     def reduce(self):
-        self.rule.sort(key=lambda x: x[0])
-        head = 0
+        if self.flag:
+            return
+        self.list.sort(key=lambda x: x[0])
+        head = -1
         rule = []
-        for (addr, mask) in self.rule:
+        for (addr, mask) in self.list:
             flag = addr + mask
             if head >= flag:
                 continue
@@ -70,6 +91,7 @@ class RouteChain(object):
                 mask = flag - addr
             head = flag
             rule.append((addr, mask))
+        self.list = []
         for (addr, mask) in rule:
             while mask > 0:
                 head = 1 << mask.bit_length() - 1
@@ -78,6 +100,7 @@ class RouteChain(object):
                 self.list.append((addr, head))
                 mask = mask - head
                 addr = addr + head
+        self.flag = True
 
 def load_config(data):
     lines = []
@@ -92,12 +115,11 @@ def load_range(data):
     route = RouteChain()
     for line in lines:
         route.insert(line)
-    route.reduce()
 
     codelist = [[] for _ in range(256)]
     masklist = [[] for _ in range(256)]
 
-    for (addr, mask) in route.list:
+    for (addr, mask) in route:
         atom = addr >> 24
         codelist[atom].append(addr >> 8 & 0x00FFFF)
         masklist[atom].append(mask.bit_length() - 9)
