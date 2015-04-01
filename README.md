@@ -99,7 +99,7 @@ One domains per line.
 
 One record per line with IP/CIDR format.
 
-Both '123.123.123.0/24' and '123.123.123.0/255.255.255.0' are acceptable.
+Both '100.100.100.0/24' and '100.100.100.0/255.255.255.0' are acceptable.
 
 ### proxyList:
 
