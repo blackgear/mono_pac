@@ -73,6 +73,20 @@ The Pac works in this way:
 
     others -> proxy
 
+## Configs
+
+All config files can use '#' as comments, all things behind '#' is ignored, space is automatic striped.
+
+Config files like this is acceptable:
+
+<pre>
+# Twitter
+twitter.com
+t.co
+tweetdeck.com
+twimg.com        # This domain is used for images
+</pre>
+
 ### blackList:
 
 One domains per line.
@@ -186,7 +200,7 @@ Just test this two PAC files:
     }
 </pre>
 
-So put all var xx = yy in the root scope will accelerate the PAC file.
+So put all `var xx = yy` in the root scope will accelerate the PAC file.
 
 PS: if code in the root scope of the PAC file will be run many times, we should put the var inside the FindProxyForURL just before it being used.
 
@@ -196,7 +210,7 @@ Experimental compress feature are used in branchs.
 
 ### master / develop
 
-PAC file is compressed with uglifyjs 2:
+PAC file is compressed with uglifyjs2:
 
 <pre>
 $ uglifyjs mono.js -m toplevel -r FindProxyForURL -c -o mono.min.js
