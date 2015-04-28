@@ -34,6 +34,8 @@ function FindProxyForURL(url, host) {
         return tunnel;
     }
 
+    if (IP.indexOf(":") >= 0) return direct;
+
     var atom = IP.split(".");
     var code = ((atom[1] & 0xff) << 8) | ((atom[2] & 0xff));
     var hash = atom[0];
