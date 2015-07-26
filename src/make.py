@@ -9,7 +9,7 @@ class DomainTree(object):
         self.name = name
         self.node = {}
         self.mark = False
-        self.dict = {}
+        self.list = []
 
     def insert(self, domain):
         domains = domain.rsplit('.', 1)
@@ -22,12 +22,12 @@ class DomainTree(object):
     def reduce(self, suffix=''):
         suffix = self.name + '.' + suffix if suffix else self.name
         if self.mark is True:
-            self.dict = {suffix:0}
+            self.list = [suffix]
         else:
-            self.dict = {}
+            self.list = []
             for name in self.node:
                 self.node[name].reduce(suffix)
-                self.dict.update(self.node[name].dict)
+                self.list.extend(self.node[name].list)
 
 class RouteChain(object):
     def __init__(self):
@@ -135,7 +135,7 @@ def load_domain(data):
     for line in lines:
         domains.insert(line)
     domains.reduce()
-    return json.dumps(domains.dict, separators=(',', ':'))
+    return "|".join(domains.list)
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -158,7 +158,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    payload = open('mono.min.js').read()
+    payload = open('mono.js').read()
 
     proxylist = '"{}"'.format(args.proxylist)
     whitelist = load_domain(args.whitelist.read())
