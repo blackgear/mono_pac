@@ -8,20 +8,20 @@ class DomainTree(object):
     def __init__(self, name=''):
         self.name = name
         self.node = {}
-        self.mark = False
+        self.head = False
         self.list = []
 
     def insert(self, domain):
         domains = domain.rsplit('.', 1)
         node = self.node.setdefault(domains[-1], DomainTree(domains[-1]))
         if len(domains) == 1:
-            node.mark = True
+            node.head = True
         else:
             node.insert(domains[0])
 
     def reduce(self, suffix=''):
         suffix = self.name + '.' + suffix if suffix else self.name
-        if self.mark is True:
+        if self.head is True:
             self.list = [suffix]
         else:
             self.list = []
@@ -116,16 +116,24 @@ def load_range(data):
     for line in lines:
         route.insert(line)
 
-    codelist = [[] for _ in range(256)]
-    masklist = [[] for _ in range(256)]
+    codelist = ['' for _ in range(256)]
+    masklist = ['' for _ in range(256)]
 
     for (addr, mask) in route:
         atom = addr >> 24
-        codelist[atom].append(addr >> 8 & 0x00FFFF)
-        masklist[atom].append(mask.bit_length() - 9)
+        codelist[atom] += unichr(addr >> 8 & 0x00FFFF)
+        masklist[atom] += hex(mask.bit_length() - 9)[2:]
 
-    codelist = json.dumps(codelist, separators=(',', ':')).replace('[]', '0')
-    masklist = json.dumps(masklist, separators=(',', ':')).replace('[]', '0')
+    templist = ''.join(codelist)
+    splitcode = 0
+    while unichr(splitcode) in templist:
+        splitcode += 1
+    codelist = unichr(splitcode).join(codelist)
+    codelist = codelist.replace(u'\u000A', '\\n').replace(u'\u000D', '\\r')
+    codelist = codelist.replace(u'\u2028', '\u2028').replace(u'\u2029', '\u2029')
+    codelist = u'"{}".split("{}")'.format(codelist, unichr(splitcode))
+    masklist = '.'.join(masklist)
+    masklist = u'"{}".split(".")'.format(masklist)
 
     return codelist, masklist
 
@@ -135,7 +143,7 @@ def load_domain(data):
     for line in lines:
         domains.insert(line)
     domains.reduce()
-    return "|".join(domains.list)
+    return '|'.join(domains.list)
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -171,7 +179,7 @@ def main():
     payload = payload.replace('__codeList__', codelist)
     payload = payload.replace('__maskList__', masklist)
 
-    args.output.write(payload)
+    args.output.write(payload.encode('utf-8'))
 
 if __name__ == '__main__':
     main()

@@ -50,8 +50,12 @@ function FindProxyForURL(url, host) {
     var codeLine = codeList[hash];
     var maskLine = maskList[hash];
 
-    if (codeLine === 0) {
+    if (codeLine === "") {
         return tunnel;
+    }
+
+    if (maskLine === "10") {
+        return direct;
     }
 
     var min = 0;
@@ -59,7 +63,7 @@ function FindProxyForURL(url, host) {
     var mid = max >> 1;
 
     do {
-        if (codeLine[mid] > code) {
+        if (codeLine[mid].charCodeAt(0) > code) {
             max = mid;
         } else {
             min = mid;
@@ -67,7 +71,7 @@ function FindProxyForURL(url, host) {
         mid = (min + max) >> 1;
     } while (min + 1 < max);
 
-    if (code - codeLine[min] >> maskLine[min] === 0) {
+    if (code - codeLine[min].charCodeAt(0) >> parseInt(maskLine[min], 16) === 0) {
         return direct;
     }
 
