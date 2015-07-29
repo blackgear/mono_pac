@@ -110,7 +110,26 @@ def load_config(data):
             lines.append(line)
     return lines
 
-def load_range(data):
+def load_integer_range(data):
+    lines = load_config(data)
+    route = RouteChain()
+    for line in lines:
+        route.insert(line)
+
+    codelist = [[] for _ in range(256)]
+    masklist = [[] for _ in range(256)]
+
+    for (addr, mask) in route:
+        atom = addr >> 24
+        codelist[atom].append(addr >> 8 & 0x00FFFF)
+        masklist[atom].append(mask.bit_length() - 9)
+
+    codelist = json.dumps(codelist, separators=(',', ':')).replace('[]', '0')
+    masklist = json.dumps(masklist, separators=(',', ':')).replace('[]', '0')
+
+    return codelist, masklist
+
+def load_unicode_range(data):
     lines = load_config(data)
     route = RouteChain()
     for line in lines:
@@ -159,6 +178,8 @@ def parse_args():
                         metavar='ipList', help='Path of the iprange list')
     parser.add_argument('-p', dest='proxylist', required=True, metavar='proxyList',
                         help='Proxy parameter in the pac file')
+    parser.add_argument('-m', dest='unicode', action='store_true',
+                        help='Use unicode compression')
     parser.add_argument('-o', dest='output', default=sys.stdout, type=argparse.FileType('w'),
                         metavar='pacFile', help='Path of the output pac file')
 
@@ -166,12 +187,16 @@ def parse_args():
 
 def main():
     args = parse_args()
-    payload = open('mono.js').read()
 
     proxylist = '"{}"'.format(args.proxylist)
     whitelist = load_domain(args.whitelist.read())
     blacklist = load_domain(args.blacklist.read())
-    codelist, masklist = load_range(args.iplist.read())
+    if args.unicode == False:
+        payload = open('mono.min.js').read()
+        codelist, masklist = load_integer_range(args.iplist.read())
+    else:
+        payload = open('mono-unicode.min.js').read()
+        codelist, masklist = load_unicode_range(args.iplist.read())
 
     payload = payload.replace('__proxyList__', proxylist)
     payload = payload.replace('__whiteList__', whitelist)
