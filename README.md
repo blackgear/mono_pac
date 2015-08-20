@@ -85,6 +85,11 @@ When you browse https://www.google.com/abc, The Pac works in this way:
                           |
                           v False
          True +-----------------------+
+  Direct <----|   If IP = IPv6 addr   |
+              +-----------------------+
+                          |
+                          v False
+         True +-----------------------+
   Direct <----|    If IP in ipList    |
               +-----------------------+
                           |
