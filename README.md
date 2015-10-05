@@ -65,7 +65,7 @@ When you browse https://www.google.com/abc, The Pac works in this way:
                           |              |
                           v False        |
          True +-----------------------+  |
-  Direct <----|If domain in blackList |  |
+  Direct <----|If domain in whiteList |  |
               +-----------------------+  |
                           |              |
                           v False        |
