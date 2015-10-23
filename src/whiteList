@@ -4,8 +4,17 @@ local
 lan
 localhost
 
+# Apple
+appldnld.apple.com
+adcdownload.apple.com
+icloud-content.com
+ls.apple.com
+lcdn-registration.apple.com
+phobos.apple.com
+swcdn.apple.com
+
 # Acfun
-#acfun.tv
+acfun.tv
 
 # Ali
 alipay.com
@@ -33,7 +42,6 @@ elemecdn.com
 
 # iapps
 iapps.im
-#mzstatic.com
 
 # NetEase
 163.com
