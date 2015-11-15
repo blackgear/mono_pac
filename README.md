@@ -17,7 +17,8 @@ $ git clone https://github.com/blackgear/mono_pac.git
 ## Usage
 
 ```
-$ python ./src/make.py -h
+$ cd ./src
+$ python ./make.py -h
 usage: MonoPac [-h] [-b blackList] [-w whiteList] [-i ipList] -p proxyList
                [-m] [-o pacFile]
 
@@ -34,7 +35,7 @@ optional arguments:
 
 Across the Great Firewall, we can reach every corner in the world.
 
-$ python ./src/make.py -p "SOCKS5 192.168.1.1:1080;SOCKS 192.168.1.1:1080" -o ./proxy.pac
+$ python ./make.py -p "SOCKS5 192.168.1.1:1080;SOCKS 192.168.1.1:1080" -o ./proxy.pac
 ```
 
 **ONLY** Python 2 is supported.
