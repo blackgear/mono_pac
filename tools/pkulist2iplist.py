@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# https://its.pku.edu.cn/oper/liebiao.jsp
 
 with open('pkulist') as f:
     data = f.read()

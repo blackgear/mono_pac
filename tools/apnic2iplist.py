@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# https://ftp.apnic.net/stats/apnic/delegated-apnic-latest
 
 with open('delegated-apnic-latest') as f:
     data = f.read()
