@@ -46,6 +46,7 @@ oldresult = speedTest("blackgear-mono_pac.pac", iplist);
 newresult = speedTest("blackgear-mono_pac-unicode.pac", iplist);
 speedTest("Leask-Flora_Pac-mod.pac", iplist);
 speedTest("usufu-Flora_Pac.pac", iplist);
+speedTest("yaleh-Flora_Pac.pac", iplist);
 
 for (var i = 0; i < repeat; i++) {
   if (oldresult[i] !== newresult[i]) {

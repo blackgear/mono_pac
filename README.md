@@ -63,8 +63,8 @@ When you browse https://www.google.com/abc, The Pac works in this way:
          True +-----------------------+  |
    Proxy <----|If domain in blackList |  |
               +-----------------------+  |
-                          |              |
-                          v False        |
+                          |              | Remove Prefix www.
+                          v False        | Remove Prefix google.
          True +-----------------------+  |
   Direct <----|If domain in whiteList |  |
               +-----------------------+  |
