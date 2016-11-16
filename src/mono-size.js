@@ -2,15 +2,18 @@
  * Copyright (C) 2015 BlackGear
  * https://github.com/BlackGear/Mono_PAC
  */
-function merge(obj, key) {
-    obj[key] = 1;
+function merge(list) {
+    var obj = {};
+    while (i = list.pop())  {
+        obj[i] = 1;
+    };
     return obj;
-}
+};
 
 var tunnel = __proxyList__;
 var direct = "DIRECT";
-var whiteList = "__whiteList__".split("|").reduce(merge, {});
-var blackList = "__blackList__".split("|").reduce(merge, {});
+var whiteList = merge("__whiteList__".split("|"));
+var blackList = merge("__blackList__".split("|"));
 var codeList = __codeList__;
 var maskList = __maskList__;
 

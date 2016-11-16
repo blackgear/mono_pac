@@ -156,13 +156,24 @@ def load_unicode_range(data):
 
     return codelist, masklist
 
-def load_domain(data):
+def load_nested_domain(data):
     lines = load_config(data)
     domains = DomainTree()
     for line in lines:
         domains.insert(line)
     domains.reduce()
     return '|'.join(domains.list)
+
+def load_plain_domain(data):
+    lines = load_config(data)
+    domains = DomainTree()
+    for line in lines:
+        domains.insert(line)
+    domains.reduce()
+    result = {}
+    for i in domains.list:
+        result[i] = 1
+    return json.dumps(result, separators=(',', ':'))
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -178,8 +189,10 @@ def parse_args():
                         metavar='ipList', help='Path of the iprange list')
     parser.add_argument('-p', dest='proxylist', required=True, metavar='proxyList',
                         help='Proxy parameter in the pac file')
-    parser.add_argument('-m', dest='unicode', action='store_true',
-                        help='Use unicode compression')
+    parser.add_argument('-os', dest='size', action='store_true',
+                        help='Optimize for size')
+    parser.add_argument('-op', dest='perf', action='store_true',
+                        help='Optimize for performance')
     parser.add_argument('-o', dest='output', default=sys.stdout, type=argparse.FileType('w'),
                         metavar='pacFile', help='Path of the output pac file')
 
@@ -189,14 +202,21 @@ def main():
     args = parse_args()
 
     proxylist = '"{}"'.format(args.proxylist)
-    whitelist = load_domain(args.whitelist.read())
-    blacklist = load_domain(args.blacklist.read())
-    if args.unicode == False:
-        payload = open('mono.min.js').read()
+    if args.size == True:
+        payload = open('mono-size.min.js').read()
+        whitelist = load_nested_domain(args.whitelist.read())
+        blacklist = load_nested_domain(args.blacklist.read())
+        codelist, masklist = load_unicode_range(args.iplist.read())
+    elif args.perf == True:
+        payload = open('mono-perf.min.js').read()
+        whitelist = load_plain_domain(args.whitelist.read())
+        blacklist = load_plain_domain(args.blacklist.read())
         codelist, masklist = load_integer_range(args.iplist.read())
     else:
-        payload = open('mono-unicode.min.js').read()
-        codelist, masklist = load_unicode_range(args.iplist.read())
+        payload = open('mono.min.js').read()
+        whitelist = load_nested_domain(args.whitelist.read())
+        blacklist = load_nested_domain(args.blacklist.read())
+        codelist, masklist = load_integer_range(args.iplist.read())
 
     payload = payload.replace('__proxyList__', proxylist)
     payload = payload.replace('__whiteList__', whitelist)

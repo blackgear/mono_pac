@@ -3,6 +3,7 @@ asia
 io
 link
 name
+red
 
 # ccTLDs
 ac
@@ -412,6 +413,11 @@ pushbullet.com
 reddit.com
 redditmedia.com
 redditstatic.com
+
+# Slides
+slides.com
+slid.es
+uservoice.com
 
 # Stackexchange
 stackoverflow.com
