@@ -1,3 +1,11 @@
+# No longer maintained
+
+Why?
+
+Because with my new [patch](https://github.com/shadowsocks/shadowsocks-libev/commit/b918fd7a7772efe7d4cad3bbcb388f112140bd91) to shadowsocks-libev, the embedded bypass function in ss-local is working correctly now.
+
+This bypass function supports regex and ip range, read the [example](https://github.com/shadowsocks/shadowsocks-libev/tree/master/acl)
+
 # Mono PAC
 
 A PAC(Proxy auto-config) file generator working with fetched China IP range, which helps walk around GFW.
